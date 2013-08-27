@@ -7,6 +7,7 @@ This repository contains the whole NetBeans project (including libraries, build 
 To run it:
 
 1) Download NetBeans 7.2.1 or later
+   (The Java SE version is enough)
 
 2) Open NetBeans
 
