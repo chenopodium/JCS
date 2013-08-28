@@ -60,20 +60,18 @@ public class JoyChristianSimulation {
             b = randomVectorOnSphere();
         }
         else {
-            a = new Vector3D(1.0, 0, 0);
+            a = new Vector3D(1.0, 0.0, 0.0);
             b = this.randomVectorOnPlane(Math.random()*MAX_ANGLE);            
         }
         if (PICK_E_VECTORS_ON_SPHERE) {
             e = randomVectorOnSphere();  
         }
-        else {
-            e = this.randomVectorOnPlane(Math.random()*2*Math.PI);
-        }                        
+        else e = this.randomVectorOnPlane(Math.random()*2.0*Math.PI);                        
         
-        double theta = a.angle(b);
+        double eta_ab = a.angle(b);
      
-        Vector3d ae = cross(a, e);
-        Vector3d be = cross(b, e);
+        Vector3d ae = cross(a,e);
+        Vector3d be = cross(b,e);
        
         double eta_ae = angle(a,e);
         double eta_be = angle(b,e);            
@@ -90,16 +88,16 @@ public class JoyChristianSimulation {
         
         double C_ab = (-Math.cos(eta_ae + phi_op) * Math.cos(eta_be + phi_or) + Math.cos(eta_cross) * Math.sin(eta_ae + phi_oq) * Math.sin(eta_be + phi_os))/((N_a)*(N_b));
         
-        results.addExperimentCount(theta);
+        results.addExperimentCount(eta_ab);
         
-        results.addAEPlus(theta, throwDie(C_a1));
-        results.addAEPlus(theta, throwDie(C_a2));
+        results.addAEPlus(eta_ab, throwDie(C_a1));
+        results.addAEPlus(eta_ab, throwDie(C_a2));
         
-        results.addAEMinus(theta, throwDie(C_b1));
-        results.addAEMinus(theta, throwDie(C_b2));
+        results.addAEMinus(eta_ab, throwDie(C_b1));
+        results.addAEMinus(eta_ab, throwDie(C_b2));
         
-        results.addPlusResult(theta, throwDie(C_ab));
-        results.addMinusResult(theta, throwDie(C_ab));
+        results.addPlusResult(eta_ab, throwDie(C_ab));
+        results.addMinusResult(eta_ab, throwDie(C_ab));
         
     }  
     
@@ -116,14 +114,12 @@ public class JoyChristianSimulation {
         if (throwPasses) {
             detection = (int)-Math.signum(C);
         }
-        else {
-            detection = 0;
-        }
+        else detection = 0;
         return detection;
     }
     private double angle(Vector3d a, Vector3d b) {
-         double eta = a.angle(b) ;         
-         return eta;
+         double eta_ab = a.angle(b);         
+         return eta_ab;
     }
     
     private Vector3d cross(Vector3d a, Vector3d b) {       
@@ -145,10 +141,10 @@ public class JoyChristianSimulation {
         return new Vector3D(x * s, y * s, z * s);
     }
     
-    private Vector3D randomVectorOnPlane(double theta) {
-        double x = Math.cos(theta);
-        double y = Math.sin(theta);        
-        return new Vector3D(x, y, 0);
+    private Vector3D randomVectorOnPlane(double eta_ab) {
+        double x = Math.cos(eta_ab);
+        double y = Math.sin(eta_ab);        
+        return new Vector3D(x, y, 0.0);
     }
     
      public static void main(String[] args) {
@@ -163,9 +159,9 @@ public class JoyChristianSimulation {
 
     public Vector3D randomVectorRelativeTo(Vector3D a) {
         Vector3D b = new Vector3D(a.x, a.y, a.z);
-        b.rotateX(Math.random()*2*Math.PI);
-        b.rotateY(Math.random()*2*Math.PI);
-        b.rotateZ(Math.random()*2*Math.PI);
+        b.rotateX(Math.random()*2.0*Math.PI);
+        b.rotateY(Math.random()*2.0*Math.PI);
+        b.rotateZ(Math.random()*2.0*Math.PI);
         return b;
     }
 
