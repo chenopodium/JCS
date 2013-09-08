@@ -1,6 +1,7 @@
 JCS
 ===
-Joy Christians Simulation
+Joy Christians Simulation, Part 1
+(There is a second simulation under the JCS2 project)
 
 This repository contains the whole NetBeans project (including libraries, build file etc).
 
