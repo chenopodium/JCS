@@ -21,8 +21,8 @@ import javax.swing.JPanel;
 public class PlotPanel extends JPanel {
     
     static final Logger log = Logger.getLogger("PlotPanel");    
-    static double MAX_PLOT_ANGLE = 180.0;
-    static final int BORDER = 40;  
+    static double MAX_PLOT_ANGLE = 360.0;
+    static final int BORDER = 60;  
     
     private Results results;
 
@@ -61,8 +61,8 @@ public class PlotPanel extends JPanel {
 
         // x from 0 to MAXANGLE
         double dx = (double) (w - 2 * BORDER) / MAX_PLOT_ANGLE;
-        double dy = (double) (h - 2 * BORDER);
-        int my = (int) ((h - BORDER));
+        double dy = (double) (h - 2 * BORDER)/2;
+        int my = (int) h/2;
         g.setColor(Color.black);
         g.drawLine(BORDER, my, w - BORDER, my);
         g.drawLine(BORDER, BORDER, BORDER, h - BORDER);
@@ -116,9 +116,9 @@ public class PlotPanel extends JPanel {
         for (double x = 0; x <= MAX_PLOT_ANGLE; x += 1.0) {
             g.setColor(Color.black);
             double rad = Math.toRadians(x);
-            double y = Math.pow(Math.sin(rad / 2.0), 2) / 2.0;
+            double y = - Math.cos(rad);
             double radold = Math.toRadians(xold);
-            double yold = Math.pow(Math.sin(radold / 2.0), 2) / 2.0;
+            double yold = -Math.cos(radold);
             int guix = (int) (x * dx) + BORDER;
             int guiy = (int) (my - y * dy);
             int guixold = (int) (xold * dx) + BORDER;
@@ -127,20 +127,20 @@ public class PlotPanel extends JPanel {
             xold = x;
         }
 
-        xold = 0;
-        for (double x = 0; x <= MAX_PLOT_ANGLE; x += 1.0) {
-            g.setColor(Color.black);
-            double rad = Math.toRadians(x);
-            double y = Math.pow(Math.cos(rad / 2.0), 2) / 2.0;
-            double radold = Math.toRadians(xold);
-            double yold = Math.pow(Math.cos(radold / 2.0), 2) / 2.0;
-            int guix = (int) (x * dx) + BORDER;
-            int guiy = (int) (my - y * dy);
-            int guixold = (int) (xold * dx) + BORDER;
-            int guiyold = (int) (my - yold * dy);
-            g.drawLine(guix, guiy, guixold, guiyold);
-            xold = x;
-        }
+//        xold = 0;
+//        for (double x = 0; x <= MAX_PLOT_ANGLE; x += 1.0) {
+//            g.setColor(Color.black);
+//            double rad = Math.toRadians(x);
+//            double y = Math.pow(Math.cos(rad / 2.0), 2) / 2.0;
+//            double radold = Math.toRadians(xold);
+//            double yold = Math.pow(Math.cos(radold / 2.0), 2) / 2.0;
+//            int guix = (int) (x * dx) + BORDER;
+//            int guiy = (int) (my - y * dy);
+//            int guixold = (int) (xold * dx) + BORDER;
+//            int guiyold = (int) (my - yold * dy);
+//            g.drawLine(guix, guiy, guixold, guiyold);
+//            xold = x;
+//        }
     }
 
     public void drawCoordinateSystem(Graphics g, double dx, int my, int w, double dy) {
@@ -159,7 +159,7 @@ public class PlotPanel extends JPanel {
         }
         g.drawString("Angle eta_ab", w / 2 - BORDER, my + 30);
         // draw y axis      
-        for (double y = 0; y <= 1.0; y += 0.1) {
+        for (double y = 0-1.0; y <= 1.0; y += 0.1) {
             int guix = BORDER - 20;
             int guiy = (int) (my - y * dy);
             g.drawLine(guix + 10, guiy, BORDER, guiy);

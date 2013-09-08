@@ -23,7 +23,7 @@ public class JoyChristianSimulation {
     private static boolean PICK_E_VECTORS_ON_SPHERE = true;
 
     /* maximum angle in degrees that we are considering */
-    private static final double MAX_ANGLE = Math.PI;
+    private static final double MAX_ANGLE = 2*Math.PI;
     
     /* constant phase shifts */
     private static final double phi_op = +0.000;  // in radians
@@ -32,7 +32,7 @@ public class JoyChristianSimulation {
     private static final double phi_os = +0.663;  // in radians
     
     /* nr experiments per angle */
-    private static final int total_nr_experiments = 9000000;
+    private static final int total_nr_experiments = 1000000;
     
     /* results */
     private Results results;
@@ -89,16 +89,18 @@ public class JoyChristianSimulation {
         double C_ab = (-Math.cos(eta_ae + phi_op) * Math.cos(eta_be + phi_or) + Math.cos(eta_cross) * Math.sin(eta_ae + phi_oq) * Math.sin(eta_be + phi_os))/((N_a)*(N_b));
         
         results.addExperimentCount(eta_ab);
+        results.addExperimentCount(Math.PI*2 -eta_ab);
         
-        results.addAEPlus(eta_ab, throwDie(C_a1));
-        results.addAEPlus(eta_ab, throwDie(C_a2));
-        
-        results.addAEMinus(eta_ab, throwDie(C_b1));
-        results.addAEMinus(eta_ab, throwDie(C_b2));
+//        results.addAEPlus(eta_ab, throwDie(C_a1));
+//        results.addAEPlus(eta_ab, throwDie(C_a2));
+//        
+//        results.addAEMinus(eta_ab, throwDie(C_b1));
+//        results.addAEMinus(eta_ab, throwDie(C_b2));
         
         results.addPlusResult(eta_ab, throwDie(C_ab));
-        results.addMinusResult(eta_ab, throwDie(C_ab));
-        
+        results.addPlusResult(Math.PI*2 -eta_ab, throwDie(C_ab));
+        results.addPlusResult(eta_ab, throwDie(C_ab));
+        results.addPlusResult(Math.PI*2 -eta_ab, throwDie(C_ab));
     }  
     
     public int throwDie(double C) {

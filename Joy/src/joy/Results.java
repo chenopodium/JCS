@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class Results {
     static Logger log =  Logger.getLogger("Results");
     
-    private static double MAX_ANGLE = 360.0;
+    private static double MAX_ANGLE = 361.0;
     private static int PLUS_TYPE = 0;
     private static int MINUS_TYPE = 1;   
     private static int AEPLUS_TYPE = 2;
@@ -50,10 +50,10 @@ public class Results {
     }
      
     public void addPlusResult(double angleRad, double value) {
-        add(angleRad, value, true);        
+        add(angleRad, value, true);                 
     } 
     public void addMinusResult(double angleRad, double value) {
-        add(angleRad, value, false);        
+        add(angleRad, value, false);                
     } 
     public void addExperimentCount(double angleRad) {
         double angleDeg = Math.toDegrees(angleRad);
@@ -66,10 +66,12 @@ public class Results {
         int bucket = getBucket(angleDeg);            
         if (Math.abs(value) == 1) {
             if (value > 0) {
-                if (plus) databuckets[bucket][PLUS_TYPE]++;
+                //if (plus) 
+                    databuckets[bucket][PLUS_TYPE]++;
            }
             else {
-                if (!plus) databuckets[bucket][MINUS_TYPE]++;
+                //if (!plus) 
+                    databuckets[bucket][PLUS_TYPE]--;
             }            
         }              
     }
@@ -83,6 +85,7 @@ public class Results {
         int bucket = getBucket(angleDeg);
         double totalnr = ((double)(databuckets[bucket][TOTAL_TYPE]));
         double prob = (double)databuckets[bucket][which]/totalnr;      
+        
         return prob;
     }
     private void log(String msg) {
